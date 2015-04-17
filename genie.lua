@@ -4,7 +4,7 @@ additionalLibraries = {}
 
 dofile ( "bubblewrap/Scripts/Bubblewrap_Scripts.lua" )
 
-solution "PongVorce"
+solution "LudumDare32"
 	configurations { "Debug", "Release", "CrashNBurn" }
 	location "build"
 

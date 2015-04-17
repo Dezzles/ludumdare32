@@ -1,0 +1,14 @@
+{
+	"name" : "basics",
+	"items" : [
+		{
+			"type" : "Entity",
+			"name" : "LevelEntity",
+			"position" : "0 0 0",
+			"children" : [
+			],
+			"components" : [
+			]
+		}
+	]
+}

@@ -1,7 +1,16 @@
 {
 	"name" : "textures",
 	"resources" : [
-	
+		{
+			"name" : "MapTexture",
+			"texture" : "island.png",
+			"type" : "Texture"
+		},
+		{
+			"name" : "TilesTexture",
+			"texture" : "tiles.png",
+			"type" : "Texture"
+		}
 	]
 
 

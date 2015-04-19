@@ -6,8 +6,103 @@
 			"name" : "LevelEntity",
 			"position" : "0 0 0",
 			"children" : [
+				{
+					"type" : "Entity",
+					"name" : "BackgroundEntity",
+					"position" : "0 0 0",
+					"children" : [
+						{
+							"name" : "backgroundEntity1",
+							"type" : "Entity",
+							"position" : "320 320 0",
+							"components" : [
+								{
+									"type" : "Sprite",
+									"texture" : "textures:MapTexture",
+									"window" : "Main",
+									"size" : "640 640"
+								}
+							]
+						},
+						{
+							"name" : "backgroundEntity2",
+							"type" : "Entity",
+							"position" : "960 320 0",
+							"components" : [
+								{
+									"type" : "Sprite",
+									"texture" : "textures:MapTexture",
+									"window" : "Main",
+									"size" : "640 640"
+								}
+							]
+						},
+						{
+							"name" : "backgroundEntity3",
+							"type" : "Entity",
+							"position" : "1600 320 0",
+							"components" : [
+								{
+									"type" : "Sprite",
+									"texture" : "textures:MapTexture",
+									"window" : "Main",
+									"size" : "640 640"
+								}
+							]
+						}
+					],
+					"components" : [
+						{
+							"type" : "BackgroundComponent",
+							"backgroundSize" : 640,
+							"speed" : 30
+						}
+					]
+				}
 			],
 			"components" : [
+			]
+		},
+		{
+			"name" : "PuzzleEntity",
+			"type" : "Entity",
+			"position" : "350 150 0",
+			"children" : [],
+			"components" : [
+				{
+					"name" : "puzzleController",
+					"type" : "PuzzleComponent",
+					"tileSize" : 25,
+					"width" : 4,
+					"height" : 5,
+					"backgroundColour" : "0 0 0 128"
+				},
+				{
+					"name" : "BorderVertices",
+					"type" : "Vertices",
+					"window" : "Main",
+					"drawOrder" : 90,
+					"primitiveType" : "Lines",
+					"vertices" : [ ]
+				},
+				{
+					"name" : "FillVertices",
+					"type" : "Vertices",
+					"window" : "Main",
+					"drawOrder" : 80,
+					"primitiveType" : "TrianglesStrip",
+					"vertices" : [ ]
+				},
+				{
+					"name" : "TileVertices",
+					"type" : "Vertices",
+					"window" : "Main",
+					"texture" : "textures:TilesTexture",
+					"drawOrder" : 85,
+					"primitiveType" : "Triangles",
+					"vertices" : [ ]
+				}
+				
 			]
 		}
 	]

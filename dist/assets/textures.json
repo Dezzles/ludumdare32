@@ -17,19 +17,39 @@
 			"type" : "Texture"
 		},
 		{
-			"name" : "Clouds",
+			"name" : "DeadlySound",
+			"type" : "SoundBuffer",
+			"filename" : "sound/Deadly.ogg"
+		},
+		{
+			"name" : "ExplosionSound",
+			"type" : "SoundBuffer",
+			"filename" : "sound/Explosion3.ogg"
+		},
+		{
+			"name" : "GameOverSound",
+			"type" : "SoundBuffer",
+			"filename" : "sound/GameOver.ogg"
+		},
+		{
+			"name" : "Icons",
 			"type" : "ResourceList",
-			"items" : [
-					{
-						"type" : "Texture",
-						"texture" : "clouds/cloud1.png",
-						"name" : "Adult1"
-					},
-					{
-						"type" : "Texture",
-						"texture" : "clouds/cloud2.png",
-						"name" : "Adult2"
-					}
+			"items" : [ 
+				{
+					"type" : "Texture",
+					"name" : "Safety",
+					"texture" : "safety.png"
+				},
+				{
+					"type" : "Texture",
+					"name" : "Smily",
+					"texture" : "smily.png"
+				},
+				{
+					"type" : "Texture",
+					"name" : "Danger",
+					"texture" : "danger.png"
+				}
 			]
 		},
 		{
@@ -39,12 +59,12 @@
 					{
 						"type" : "Texture",
 						"texture" : "enemies/enemy 1.png",
-						"name" : "Adult1"
+						"name" : "Enemy1"
 					},
 					{
 						"type" : "Texture",
 						"texture" : "enemies/enemy 2.png",
-						"name" : "Adult2"
+						"name" : "Enemy2"
 					}
 			]
 		},
@@ -52,6 +72,11 @@
 			"name" : "ArialFont",
 			"type" : "Font",
 			"fontFile" : "arial.ttf"
+		},
+		{
+			"name" : "Explosion",
+			"texture" : "explosion.png",
+			"type" : "Texture"
 		}
 	]
 

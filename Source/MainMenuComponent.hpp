@@ -1,29 +1,26 @@
-#ifndef ScoreComponent_HPP
-#define ScoreComponent_HPP
+#ifndef MainMenuComponent_HPP
+#define MainMenuComponent_HPP
 
 #include "Bubblewrap/Render.hpp"
 #include "Bubblewrap/Base.hpp"
 
 using namespace Bubblewrap;
 using namespace Render;
-class ScoreComponent 
+class MainMenuComponent 
 	: public Bubblewrap::Base::Component
 {
 public:
-	ScoreComponent();
+	MainMenuComponent();
 	void Initialise( Json::Value Params );
 
-	CREATE_REGISTER( ScoreComponent );
+	CREATE_REGISTER( MainMenuComponent );
 
 	void OnAttach();
 	void OnDetach();
 
-	PROTECTED_FIELD( float, Score );
-
 	void InputFunction( Bubblewrap::Events::Event* Event );
 private:
-	Text* ScoreText_;
-	Events::EventHandle InputHandle_;
+ 	Events::EventHandle InputHandle_;
 };
 
 

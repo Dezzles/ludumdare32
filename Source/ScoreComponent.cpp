@@ -1,5 +1,5 @@
 #include "ScoreComponent.hpp"
-
+#include "Bubblewrap/Events.hpp"
 using namespace Math;
 
 ScoreComponent::ScoreComponent()
@@ -20,9 +20,26 @@ void ScoreComponent::Copy( ScoreComponent* Target, ScoreComponent* Base )
 
 void ScoreComponent::OnAttach()
 {
-	ScoreText_ = GetParentEntity()->GetComponentsByType< Text >()[ 0 ];
+	InputHandle_ = GetManager().GetEventManager().RegisterEvent( Events::EventTypes::Input, std::bind( &ScoreComponent::InputFunction, this, std::placeholders::_1 ) );
+	ScoreText_ = GetParentEntity()->GetComponentsByType< Text >( "Score" )[ 0 ];
 	char buffer[ 256 ];
 	memset( buffer, 0, 256 );
 	sprintf( buffer, "Score: %d", (int)Score_ );
 	ScoreText_->SetText( buffer );
+}
+
+void ScoreComponent::OnDetach()
+{
+	InputHandle_.Destroy();
+}
+
+void ScoreComponent::InputFunction( Bubblewrap::Events::Event* Event )
+{
+	Bubblewrap::Events::InputData data = *( Bubblewrap::Events::InputData* )Event->GetData();
+
+	if ( ( data.Key_ == Events::Key::Space ) && ( data.InputType_ == Events::InputData::InputType::KeyUp ) )
+	{
+		GetParentEntity()->Destroy();
+		GetRegister().LoadObject( "basics:MainMenu", nullptr );
+	}
 }

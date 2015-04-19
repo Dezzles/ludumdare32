@@ -64,6 +64,7 @@ void PuzzleComponent::Copy( PuzzleComponent* Target, PuzzleComponent* Base )
 
 void PuzzleComponent::OnAttach()
 {
+	Sound_ = GetParentEntity()->GetComponentsByType< Bubblewrap::Audio::Sound >()[ 0 ];
 	// DoCreateMap( 4, 5);
 	InputHandle_ = GetManager().GetEventManager().RegisterEvent( Events::EventTypes::Input, std::bind( &PuzzleComponent::InputFunction, this, std::placeholders::_1 ) );
 }
@@ -312,9 +313,13 @@ void PuzzleComponent::InputFunction( Bubblewrap::Events::Event* Event )
 		if ( MapInfo_[ playerX + xMod ][ playerY + yMod ].Type_ == ( LocationType ) ( LocationType::Player | LocationType::Death ) )
 		{
 			EnemyObject_->SetGoFast( true );
+			if ( Sound_ != nullptr )
+				Sound_->Play();
 		}
 		if ( MapInfo_[ playerX + xMod ][ playerY + yMod ].Type_ == ( LocationType ) ( LocationType::Player | LocationType::Safe ) )
 		{
+			Base::Entity* explosion = dynamic_cast<Base::Entity*>( GetRegister().LoadObject( "basics:Explosion", GetParentEntity()->GetParentEntity() ) );
+			explosion->SetLocalPosition( EnemyObject_->GetParentEntity()->LocalPosition() );
 			EnemyObject_->GetParentEntity()->Destroy();
 			GetParentEntity()->Destroy();
 			LevelObject_->RemovePuzzle( GetParentEntity() );

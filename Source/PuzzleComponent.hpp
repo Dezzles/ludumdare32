@@ -2,6 +2,7 @@
 #define PUZZLECOMPONENT_HPP
 
 #include "Bubblewrap/Render.hpp"
+#include "Bubblewrap/Audio.hpp"
 #include "Bubblewrap/Base/Base.hpp"
 
 using namespace Bubblewrap;
@@ -86,6 +87,8 @@ private:
 
 	void GenerateMap();
 	void CreateMaze();
+
+	Audio::Sound* Sound_;
 };
 
 

@@ -63,13 +63,13 @@
 				{
 					"name" : "PlayerEntity",
 					"type" : "Entity",
-					"position" : "700 492 0",
+					"position" : "700 420 0",
 					"components" : [
 						{
 							"type" : "Sprite",
 							"name" : "PlayerSprite",
 							"texture" : "textures:PlayerTexture",
-							"size" : "32 64",
+							"size" : "96 192",
 							"window" : "Main"
 						}
 					]
@@ -89,7 +89,7 @@
 					"type" : "Text",
 					"name" : "ScoreText",
 					"position" : "300 300",
-					"colour" : "255 255 255 255",
+					"colour" : "0 0 0 255",
 					"font" : "textures:ArialFont",
 					"window" : "Main",
 					"layer" : 90,
@@ -115,6 +115,12 @@
 					"backgroundColour" : "0 0 0 128",
 					"movementSpeed" : 150,
 					"maxMapDifficulty" : 25
+				},
+				{
+					"type" : "Sound",
+					"resource" : "textures:DeadlySound",
+					"autoplay" : false,
+					"volume" : 0.2
 				},
 				{
 					"name" : "BorderVertices",
@@ -169,9 +175,22 @@
 			"components" : [
 				{
 					"type" : "Text",
+					"name" : "GameOverText",
+					"position" : "0 -150",
+					"colour" : "0 0 0 255",
+					"font" : "textures:ArialFont",
+					"window" : "Main",
+					"layer" : 20,
+					"text" : "Game Over",
+					"characterSize" : 36,
+					"hAlign" : "centre",
+					"vAlign" : "centre"
+				},
+				{
+					"type" : "Text",
 					"name" : "Score",
 					"position" : "0 0",
-					"colour" : "255 255 255 255",
+					"colour" : "0 0 0 255",
 					"font" : "textures:ArialFont",
 					"window" : "Main",
 					"layer" : 20,
@@ -181,10 +200,16 @@
 					"vAlign" : "centre"
 				},
 				{
+					"type" : "Sound",
+					"resource" : "textures:GameOverSound",
+					"autoplay" : true,
+					"volume" : 1.0
+				},
+				{
 					"type" : "Text",
 					"name" : "Score",
 					"position" : "0 150",
-					"colour" : "255 255 255 255",
+					"colour" : "0 0 0 255",
 					"font" : "textures:ArialFont",
 					"window" : "Main",
 					"layer" : 20,
@@ -195,6 +220,249 @@
 				},
 				{
 					"type" : "ScoreComponent"
+				}
+			]
+		},
+		{
+			"type" : "Entity",
+			"name" : "MainMenu",
+			"position" : "0 0 0",
+			"children" : [
+				{
+					"type" : "Entity",
+					"position" : "700 300",
+					"components" : [
+						{
+							"type" : "Sprite",
+							"texture" : "textures:PlayerTexture",
+							"window" : "Main",
+							"size" : "128 256"
+						}
+					]
+				},
+				{
+					"type" : "Entity",
+					"position" : "100 270",
+					"components" : [
+						{
+							"type" : "Sprite",
+							"texture" : "textures:EnemyTextures:Enemy1",
+							"window" : "Main",
+							"size" : "64 64"
+						}
+					]
+				},
+				{
+					"type" : "Entity",
+					"position" : "180 465",
+					"components" : [
+						{
+							"type" : "Sprite",
+							"texture" : "textures:EnemyTextures:Enemy2",
+							"window" : "Main",
+							"size" : "64 64"
+						}
+					]
+				},
+				{
+					"type" : "Entity",
+					"position" : "65 100",
+					"components" : [
+						{
+							"type" : "Sprite",
+							"texture" : "textures:EnemyTextures:Enemy2",
+							"window" : "Main",
+							"size" : "64 64"
+						}
+					]
+				},
+				{
+					"type" : "Entity",
+					"position" : "56 436",
+					"components" : [
+						{
+							"type" : "Sprite",
+							"texture" : "textures:EnemyTextures:Enemy2",
+							"window" : "Main",
+							"size" : "64 64"
+						}
+					]
+				},
+				{
+					"type" : "Entity",
+					"position" : "169 117",
+					"components" : [
+						{
+							"type" : "Sprite",
+							"texture" : "textures:EnemyTextures:Enemy1",
+							"window" : "Main",
+							"size" : "64 64"
+						}
+					]
+				},
+				{
+					"type" : "Entity",
+					"position" : "180 250",
+					"components" : [
+						{
+							"type" : "Sprite",
+							"texture" : "textures:Icons:Smily",
+							"window" : "Main",
+							"size" : "64 64"
+						}
+					]
+				},
+				{
+					"type" : "Entity",
+					"position" : "180 324",
+					"components" : [
+						{
+							"type" : "Sprite",
+							"texture" : "textures:Icons:Safety",
+							"window" : "Main",
+							"size" : "64 64"
+						}
+					]
+				},
+				{
+					"type" : "Entity",
+					"position" : "180 390",
+					"components" : [
+						{
+							"type" : "Sprite",
+							"texture" : "textures:Icons:Danger",
+							"window" : "Main",
+							"size" : "64 64"
+						}
+					]
+				}
+			],
+			"components" : [
+				{
+					"type" : "Text",
+					"name" : "Score",
+					"position" : "400 100",
+					"colour" : "0 0 0 255",
+					"font" : "textures:ArialFont",
+					"window" : "Main",
+					"layer" : 20,
+					"text" : "Mind Like A Bot",
+					"characterSize" : 64,
+					"hAlign" : "centre",
+					"vAlign" : "top"
+				},
+				{
+					"type" : "Text",
+					"name" : "Score",
+					"position" : "400 100",
+					"colour" : "0 0 0 255",
+					"font" : "textures:ArialFont",
+					"window" : "Main",
+					"layer" : 20,
+					"text" : "Dezzles Presents...",
+					"characterSize" : 12,
+					"hAlign" : "centre",
+					"vAlign" : "bottom"
+				},
+				{
+					"type" : "Text",
+					"name" : "Score",
+					"position" : "400 450",
+					"colour" : "0 0 0 255",
+					"font" : "textures:ArialFont",
+					"window" : "Main",
+					"layer" : 20,
+					"text" : "Press Space to continue...",
+					"characterSize" : 24,
+					"hAlign" : "centre",
+					"vAlign" : "centre"
+				},
+				{
+					"type" : "Text",
+					"name" : "Score",
+					"position" : "220 200",
+					"colour" : "0 0 0 255",
+					"font" : "textures:ArialFont",
+					"window" : "Main",
+					"layer" : 20,
+					"text" : "WSAD - Move Smiley indicator",
+					"characterSize" : 24,
+					"hAlign" : "left",
+					"vAlign" : "centre"
+				},
+				{
+					"type" : "Text",
+					"name" : "Score",
+					"position" : "220 250",
+					"colour" : "0 0 0 255",
+					"font" : "textures:ArialFont",
+					"window" : "Main",
+					"layer" : 20,
+					"text" : "The smiley indicator, where your\nmind is in the robot's programming",
+					"characterSize" : 24,
+					"hAlign" : "left",
+					"vAlign" : "centre"
+				},
+				{
+					"type" : "Text",
+					"name" : "Score",
+					"position" : "220 320",
+					"colour" : "0 0 0 255",
+					"font" : "textures:ArialFont",
+					"window" : "Main",
+					"layer" : 20,
+					"text" : "A location that will shut down\na robot",
+					"characterSize" : 24,
+					"hAlign" : "left",
+					"vAlign" : "centre"
+				},
+				{
+					"type" : "Text",
+					"name" : "Score",
+					"position" : "220 390",
+					"colour" : "0 0 0 255",
+					"font" : "textures:ArialFont",
+					"window" : "Main",
+					"layer" : 20,
+					"text" : "Activates nutbag mode in the\nrobot causing it to move faster",
+					"characterSize" : 24,
+					"hAlign" : "left",
+					"vAlign" : "centre"
+				},
+				{
+					"type" : "MainMenuComponent"
+				}
+			]
+		},
+		{
+			"type" : "Entity",
+			"name" : "Explosion",
+			"position" : "0 0 0",
+			"components" : [
+				{
+					"type" : "Sprite",
+					"texture" : "textures:Explosion",
+					"window" : "Main",
+					"size" : "64 64"
+				},
+				{
+					"type" : "AnimatedComponent",
+					"framesPerSecond" : 10,
+					"frames" : 4,
+					"destroyOnCompletion" : true,
+					"frameOrder" : [
+						3,
+						0,
+						1,
+						2,
+						3,
+						0
+					]
+				},
+				{
+					"type" : "Sound",
+					"resource" : "textures:ExplosionSound",
+					"autoplay" : true
 				}
 			]
 		}

@@ -1,5 +1,7 @@
 #include "Bubblewrap/Bubblewrap.hpp"
 #include "PuzzleComponent.hpp"
+#include "LevelComponent.hpp"
+#include "EnemyComponent.hpp"
 #include "Bubblewrap/Registers/BubblewrapRegister.hpp"
 #include "Bubblewrap/Registers/SfmlRegisters.hpp"
 #include "Bubblewrap/Math/Matrix3.hpp"
@@ -23,6 +25,8 @@ int main()
 	{
 		Register->RegisterCreator( "BackgroundComponent", BackgroundComponent::Create, BackgroundComponent::CopyDef );
 		Register->RegisterCreator( "PuzzleComponent", PuzzleComponent::Create, PuzzleComponent::CopyDef );
+		Register->RegisterCreator( "LevelComponent", LevelComponent::Create, LevelComponent::CopyDef );
+		Register->RegisterCreator( "EnemyComponent", EnemyComponent::Create, EnemyComponent::CopyDef );
 	} );
 	settings.Packages_.push_back( "basics.json" );
 	settings.BaseObject_ = "basics:LevelEntity";

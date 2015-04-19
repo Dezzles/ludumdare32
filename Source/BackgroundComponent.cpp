@@ -12,6 +12,7 @@ void BackgroundComponent::Initialise( Json::Value Params )
 	Component::Initialise( Params );
 	
 	REQUIRED_LOAD( Float, BackgroundSize, backgroundSize );
+	REQUIRED_LOAD( Float, GapShrink, gapShrink );
 	REQUIRED_LOAD( Float, Speed, speed );
 }
 
@@ -21,6 +22,7 @@ void BackgroundComponent::Copy( BackgroundComponent* Target, BackgroundComponent
 	Component::Copy( Target, Base );
 	NAIVE_COPY( BackgroundSize );
 	NAIVE_COPY( Speed );
+	NAIVE_COPY( GapShrink );
 }
 
 void BackgroundComponent::OnAttach()
@@ -44,7 +46,7 @@ void BackgroundComponent::Update( float dt )
 		float newX = pos.X() - dt * Speed_;
 
 		if ( newX < -BackgroundSize_ * 0.5f )
-			newX += BackgroundSize_ * 3.0f;
+			newX += ( BackgroundSize_ - GapShrink_ ) * 3.0f;
 		pos.SetX( newX );
 		Entities_[ Idx ]->SetLocalPosition( pos );
 	}

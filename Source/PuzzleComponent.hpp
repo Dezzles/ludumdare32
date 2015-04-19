@@ -2,8 +2,12 @@
 #define PUZZLECOMPONENT_HPP
 
 #include "Bubblewrap/Render.hpp"
+#include "Bubblewrap/Base/Base.hpp"
+
 using namespace Bubblewrap;
 using namespace Render;
+class EnemyComponent;
+class LevelComponent;
 class PuzzleComponent
 	: public Bubblewrap::Base::Component
 {
@@ -14,15 +18,25 @@ public:
 	CREATE_REGISTER( PuzzleComponent);
 
 	void OnAttach();
-
+	void OnDetach();
 	PROTECTED_FIELD( int, Height );
 	PROTECTED_FIELD( int, Width );
 	PROTECTED_FIELD( float, TileSize );
 	PROTECTED_FIELD( Colour, BackgroundColour );
+	PROTECTED_FIELD( EnemyComponent*, EnemyObject );
+	PROTECTED_FIELD( LevelComponent*, LevelObject );
+	PROTECTED_FIELD( float, MovementSpeed );
+	PROTECTED_FIELD( float, TargetXCoord );
+	PROTECTED_FIELD( float, MaxPosition );
 	void DoCreateMap( int width, int height );
 
 
 	void InputFunction( Bubblewrap::Events::Event* Event );
+
+	PROTECTED_FIELD( float, RenderWidth );
+	PROTECTED_FIELD( float, RenderHeight );
+
+	void Update( float dt );
 private:
 	Events::EventHandle InputHandle_;
 
@@ -70,6 +84,7 @@ private:
 	void UpdateTexCoords();
 
 	void GenerateMap();
+
 };
 
 

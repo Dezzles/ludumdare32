@@ -14,7 +14,7 @@
 						{
 							"name" : "backgroundEntity1",
 							"type" : "Entity",
-							"position" : "320 320 0",
+							"position" : "310 320 0",
 							"components" : [
 								{
 									"type" : "Sprite",
@@ -27,7 +27,7 @@
 						{
 							"name" : "backgroundEntity2",
 							"type" : "Entity",
-							"position" : "960 320 0",
+							"position" : "940 320 0",
 							"components" : [
 								{
 									"type" : "Sprite",
@@ -40,7 +40,7 @@
 						{
 							"name" : "backgroundEntity3",
 							"type" : "Entity",
-							"position" : "1600 320 0",
+							"position" : "1570 320 0",
 							"components" : [
 								{
 									"type" : "Sprite",
@@ -55,12 +55,36 @@
 						{
 							"type" : "BackgroundComponent",
 							"backgroundSize" : 640,
-							"speed" : 30
+							"speed" : 30,
+							"gapShrink" : 10
+						}
+					]
+				},
+				{
+					"name" : "PlayerEntity",
+					"type" : "Entity",
+					"position" : "700 492 0",
+					"components" : [
+						{
+							"type" : "Sprite",
+							"name" : "PlayerSprite",
+							"texture" : "textures:PlayerTexture",
+							"size" : "32 64",
+							"window" : "Main"
 						}
 					]
 				}
 			],
 			"components" : [
+				{
+					"type" : "LevelComponent",
+					"name" : "LevelComponent", 
+					"spawnX" : -100,
+					"spawnY" : 380,
+					"spawnRate" : 3,
+					"puzzleGap" : 10,
+					"enemySpeed" : 30
+				}
 			]
 		},
 		{
@@ -75,7 +99,8 @@
 					"tileSize" : 25,
 					"width" : 4,
 					"height" : 5,
-					"backgroundColour" : "0 0 0 128"
+					"backgroundColour" : "0 0 0 128",
+					"movementSpeed" : 100
 				},
 				{
 					"name" : "BorderVertices",
@@ -103,6 +128,23 @@
 					"vertices" : [ ]
 				}
 				
+			]
+		},
+		{
+			"type" : "Entity",
+			"name" : "EnemyEntity",
+			"position" : "0 0 0",
+			"components" : [
+				{
+					"type" : "Sprite",
+					"name" : "EnemySprite",
+					"texture" : "textures:EnemyTextures:?",
+					"size" : "64 64"
+				},
+				{
+					"type" : "EnemyComponent",
+					"speed" : 70
+				}
 			]
 		}
 	]

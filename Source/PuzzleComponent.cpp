@@ -1,5 +1,6 @@
 #include "PuzzleComponent.hpp"
-
+#include "EnemyComponent.hpp"
+#include "LevelComponent.hpp"
 #include "Bubblewrap/Events.hpp"
 using namespace Math;
 
@@ -27,6 +28,10 @@ PuzzleComponent::PuzzleComponent()
 	TileData_[ LocationType::Safe ] =	TileData( 0.75f, 1.00f, 0.00f, 0.25f );
 	TileData_[ LocationType::Death ] =	TileData( 0.50f, 0.75f, 0.00f, 0.25f );
 	TileData_[ LocationType::Wall ] =	TileData( 0.00f, 0.25f, 0.00f, 0.25f );
+
+	EnemyObject_ = nullptr;
+
+	LevelObject_ = nullptr;
 }
 
 void PuzzleComponent::Initialise( Json::Value Params )
@@ -36,6 +41,7 @@ void PuzzleComponent::Initialise( Json::Value Params )
 	REQUIRED_LOAD( Float, TileSize, tileSize );
 	REQUIRED_LOAD( Int, Height, height );
 	REQUIRED_LOAD( Int, Width, width );
+	REQUIRED_LOAD( Float, MovementSpeed, movementSpeed );
 	if ( !Params[ "backgroundColour" ].isNull() )
 	{
 		BackgroundColour_ = Colour( Params[ "backgroundColour" ].asString() );
@@ -50,6 +56,7 @@ void PuzzleComponent::Copy( PuzzleComponent* Target, PuzzleComponent* Base )
 	NAIVE_COPY( Width );
 	NAIVE_COPY( Height );
 	NAIVE_COPY( BackgroundColour );
+	NAIVE_COPY( MovementSpeed );
 }
 
 void PuzzleComponent::OnAttach()
@@ -71,6 +78,9 @@ void PuzzleComponent::CreateMap()
 	Vertices* vertices = GetParentEntity()->GetComponentsByType<Vertices>( "BorderVertices" )[ 0 ];
 	float height = TileSize_ * Height_;
 	float width = TileSize_ * Width_;
+
+	RenderWidth_ = width;
+	RenderHeight_ = height;
 	for ( int i = 0; i < Width_ + 1; ++i )
 	{
 		Vertex v;
@@ -235,7 +245,37 @@ void PuzzleComponent::InputFunction( Bubblewrap::Events::Event* Event )
 	{
 		MapInfo_[ playerX ][ playerY ].Type_ = (LocationType)( MapInfo_[ playerX ][ playerY ].Type_ - ( LocationType::Player ));
 		MapInfo_[ playerX + xMod ][ playerY + yMod ].Type_ = (LocationType)(LocationType::Player | MapInfo_[ playerX + xMod ][ playerY + yMod ].Type_);
+		EnemyObject_->SetGoFast( false );
+		if ( MapInfo_[ playerX + xMod ][ playerY + yMod ].Type_ == ( LocationType ) ( LocationType::Player | LocationType::Death ) )
+		{
+			EnemyObject_->SetGoFast( true );
+		}
+		if ( MapInfo_[ playerX + xMod ][ playerY + yMod ].Type_ == ( LocationType ) ( LocationType::Player | LocationType::Safe ) )
+		{
+			EnemyObject_->GetParentEntity()->Destroy();
+			GetParentEntity()->Destroy();
+			LevelObject_->RemovePuzzle( GetParentEntity() );
+		}
+
 	}
 	UpdateTexCoords();
 	
+}
+
+void PuzzleComponent::OnDetach()
+{
+	InputHandle_.Destroy();
+}
+
+void PuzzleComponent::Update( float dt )
+{
+	auto pos = GetParentEntity()->LocalPosition();
+	float x = pos.X();
+	x += dt * MovementSpeed_;
+	if ( x > TargetXCoord_ )
+		x = TargetXCoord_;
+	if ( x > MaxPosition_ )
+		x = pos.X();
+	pos.SetX( x );
+	GetParentEntity()->SetLocalPosition( pos );
 }

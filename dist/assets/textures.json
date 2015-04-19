@@ -10,6 +10,43 @@
 			"name" : "TilesTexture",
 			"texture" : "tiles.png",
 			"type" : "Texture"
+		},
+		{
+			"name" : "PlayerTexture",
+			"texture" : "player.png",
+			"type" : "Texture"
+		},
+		{
+			"name" : "Clouds",
+			"type" : "ResourceList",
+			"items" : [
+					{
+						"type" : "Texture",
+						"texture" : "clouds/cloud1.png",
+						"name" : "Adult1"
+					},
+					{
+						"type" : "Texture",
+						"texture" : "clouds/cloud2.png",
+						"name" : "Adult2"
+					}
+			]
+		},
+		{
+			"name" : "EnemyTextures",
+			"type" : "ResourceList",
+			"items" : [
+					{
+						"type" : "Texture",
+						"texture" : "enemies/enemy 1.png",
+						"name" : "Adult1"
+					},
+					{
+						"type" : "Texture",
+						"texture" : "enemies/enemy 2.png",
+						"name" : "Adult2"
+					}
+			]
 		}
 	]
 

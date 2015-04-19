@@ -19,6 +19,7 @@ public:
 
 	PROTECTED_FIELD( float, BackgroundSize );
 	PROTECTED_FIELD( float, Speed );
+	PROTECTED_FIELD( float, GapShrink );
 
 	virtual void Update( float dt );
 private:

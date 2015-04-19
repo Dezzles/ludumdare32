@@ -27,6 +27,7 @@ public:
 private:
 	float TimeToSpawn_;
 	std::vector< Base::Entity* > Puzzles_;
+	int Kills_;
 };
 
 

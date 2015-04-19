@@ -28,7 +28,8 @@ public:
 	PROTECTED_FIELD( float, MovementSpeed );
 	PROTECTED_FIELD( float, TargetXCoord );
 	PROTECTED_FIELD( float, MaxPosition );
-	void DoCreateMap( int width, int height );
+	PROTECTED_FIELD( int, MaxMapDifficulty );
+	void DoCreateMap( int width, int height, int difficulty );
 
 
 	void InputFunction( Bubblewrap::Events::Event* Event );
@@ -77,14 +78,14 @@ private:
 	static const int MaxMapSize = 10;
 	void CreateMap();
 	PositionInfo MapInfo_[ MaxMapSize ][ MaxMapSize ];
-
+	int Difficulty_;
 	PositionInfo GetPositionInfo( int X, int Y );
 	std::map<LocationType, TileData> TileData_;
 
 	void UpdateTexCoords();
 
 	void GenerateMap();
-
+	void CreateMaze();
 };
 
 

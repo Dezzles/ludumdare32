@@ -7,6 +7,7 @@ using namespace Math;
 LevelComponent::LevelComponent()
 {
 	TimeToSpawn_ = 0;
+	Kills_ = 0;
 }
 
 void LevelComponent::Initialise( Json::Value Params )
@@ -19,6 +20,7 @@ void LevelComponent::Initialise( Json::Value Params )
 	REQUIRED_LOAD( Float, PuzzleGap, puzzleGap );
 	REQUIRED_LOAD( Float, EnemySpeed, enemySpeed );
 	TimeToSpawn_ = SpawnRate_;
+	++Kills_;
 }
 
 
@@ -48,11 +50,12 @@ void LevelComponent::Update( float dt )
 		enemy->SetLocalPosition( Vector3f( SpawnX_, SpawnY_, 0.0f ) );
 
 		Base::Entity* puzzle = dynamic_cast< Base::Entity* > ( GetRegister().LoadObject("basics:PuzzleEntity", GetParentEntity( ) ) );
-		puzzle->SetLocalPosition(Math::Vector3f( -100, PuzzleGap_, 0));
 
 		PuzzleComponent* puzzleComponent = puzzle->GetComponentsByType<PuzzleComponent>()[ 0 ];
 		puzzleComponent->SetEnemyObject( enemy->GetComponentsByType<EnemyComponent>()[ 0 ] );
 		puzzleComponent->SetLevelObject( this );
+		puzzleComponent->DoCreateMap( 4 + Kills_ / 30, 5 + Kills_ / 30, Kills_ / 5 );
+		puzzle->SetLocalPosition( Math::Vector3f( -puzzleComponent->GetRenderWidth() - PuzzleGap_, PuzzleGap_, 0 ) );
 		Puzzles_.push_back( puzzle );
 		SetPuzzleCoordinates();
 	}
@@ -65,6 +68,7 @@ void LevelComponent::RemovePuzzle( Base::Entity* Puzzle )
 		if ( Puzzles_[ Idx ] == Puzzle )
 		{
 			Puzzles_.erase( Puzzles_.begin() + Idx );
+			++Kills_;
 			return;
 		}
 	}
@@ -82,7 +86,6 @@ void LevelComponent::SetPuzzleCoordinates()
 		float left = right - comp->GetRenderWidth();
 
 		comp->SetTargetXCoord( left );
-		// Puzzles_[ Idx ]->SetLocalPosition( Math::Vector3f( left, PuzzleGap_, 0.0f ) );
 		m = Puzzles_[ Idx ]->LocalPosition().X() - PuzzleGap_;
 		right = left - PuzzleGap_;
 	}

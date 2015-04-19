@@ -100,7 +100,8 @@
 					"width" : 4,
 					"height" : 5,
 					"backgroundColour" : "0 0 0 128",
-					"movementSpeed" : 100
+					"movementSpeed" : 100,
+					"maxMapDifficulty" : 25
 				},
 				{
 					"name" : "BorderVertices",

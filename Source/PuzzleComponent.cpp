@@ -15,13 +15,13 @@ PuzzleComponent::PuzzleComponent()
 		}
 	}
 
-	for ( int i = 0; i < MaxMapSize; ++i )
+	/*for ( int i = 0; i < MaxMapSize; ++i )
 	{
 		for ( int j = 0; j < MaxMapSize; ++j )
 		{
 			MapInfo_[ i ][ j ].Type_ = LocationType::Empty;
 		}
-	}
+	}/**/
 
 	TileData_[ LocationType::Empty ] = TileData( 0.00f, 0.25f, 0.50f, 0.75f );
 	TileData_[ LocationType::Player ] = TileData( 0.25f, 0.50f, 0.25f, 0.50f );
@@ -42,6 +42,7 @@ void PuzzleComponent::Initialise( Json::Value Params )
 	REQUIRED_LOAD( Int, Height, height );
 	REQUIRED_LOAD( Int, Width, width );
 	REQUIRED_LOAD( Float, MovementSpeed, movementSpeed );
+	REQUIRED_LOAD( Int, MaxMapDifficulty, maxMapDifficulty );
 	if ( !Params[ "backgroundColour" ].isNull() )
 	{
 		BackgroundColour_ = Colour( Params[ "backgroundColour" ].asString() );
@@ -57,18 +58,21 @@ void PuzzleComponent::Copy( PuzzleComponent* Target, PuzzleComponent* Base )
 	NAIVE_COPY( Height );
 	NAIVE_COPY( BackgroundColour );
 	NAIVE_COPY( MovementSpeed );
+	NAIVE_COPY( MaxMapDifficulty );
 }
 
 void PuzzleComponent::OnAttach()
 {
-	DoCreateMap( 4, 5);
+	// DoCreateMap( 4, 5);
 	InputHandle_ = GetManager().GetEventManager().RegisterEvent( Events::EventTypes::Input, std::bind( &PuzzleComponent::InputFunction, this, std::placeholders::_1 ) );
 }
 
-void PuzzleComponent::DoCreateMap( int width, int height )
+void PuzzleComponent::DoCreateMap( int width, int height, int difficulty )
 {
-	Width_ = width;
-	Height_ = height;
+	Difficulty_ = difficulty;
+	Width_ = width > MaxMapSize ? MaxMapSize : width;
+	Height_ = height > MaxMapSize ? MaxMapSize : height;
+	CreateMaze();
 	GenerateMap();
 	CreateMap();
 }
@@ -178,8 +182,18 @@ PuzzleComponent::PositionInfo PuzzleComponent::GetPositionInfo( int X, int Y )
 
 void PuzzleComponent::GenerateMap()
 {
+	int DangerSpots = 1 + Difficulty_;
+	if ( Difficulty_ > MaxMapDifficulty_ )
+	{
+		Difficulty_ = MaxMapDifficulty_;
+	}
 	int posx = rand() % Width_;
 	int posy = rand() % Height_;
+	while ( MapInfo_[ posx ][ posy ].Type_ != LocationType::Empty )
+	{
+		posx = rand() % Width_;
+		posy = rand() % Height_;
+	}
 	MapInfo_[ posx ][ posy ].Type_ = LocationType::Player;
 
 	posx = rand() % Width_;
@@ -191,15 +205,63 @@ void PuzzleComponent::GenerateMap()
 	}
 	MapInfo_[ posx ][ posy ].Type_ = LocationType::Safe;
 
-	posx = rand() % Width_;
-	posy = rand() % Height_;
-	while ( MapInfo_[ posx ][ posy ].Type_ != LocationType::Empty )
-	{
-		posx = rand() % Width_;
-		posy = rand() % Height_;
-	}
-	MapInfo_[ posx ][ posy ].Type_ = LocationType::Death;
+	struct Pos { int x; int y; };
 
+	std::vector<Pos> walls;
+	for ( int Idx1 = 0; Idx1 < Width_; ++Idx1 )
+	{
+		for ( int Idx2 = 0; Idx2 < Height_; ++Idx2 )
+		{
+			if ( MapInfo_[ Idx1 ][ Idx2 ].Type_ == LocationType::Wall )
+			{
+				Pos p;
+				p.x = Idx1;
+				p.y = Idx2;
+				walls.push_back( p );
+			}
+		}
+	}
+
+	while ( walls.size() > Difficulty_ )
+	{
+		int r = rand() % walls.size();
+		MapInfo_[ walls[ r ].x ][ walls[ r ].y ].Type_ = LocationType::Empty;
+		walls.erase( walls.begin() + r );
+	}
+	walls.clear();
+
+	for ( int Idx1 = 0; Idx1 < Width_; ++Idx1 )
+	{
+		for ( int Idx2 = 0; Idx2 < Height_; ++Idx2 )
+		{
+			if ( MapInfo_[ Idx1 ][ Idx2 ].Type_ == LocationType::Empty )
+			{
+				Pos p;
+				p.x = Idx1;
+				p.y = Idx2;
+				walls.push_back( p );
+			}
+		}
+	}
+	int targetPieces = Difficulty_;
+	while ( ( targetPieces > 0 ) && ( walls.size() > 0 ) )
+	{
+		int u = rand() % walls.size();
+		MapInfo_[ walls[ u ].x ][ walls[ u ].y ].Type_ = LocationType::Death;
+		walls.erase( walls.begin() + u );
+		--targetPieces;
+	}
+	/*posx = rand() % Width_;
+	posy = rand() % Height_;
+	for ( int Idx = 0; Idx < Difficulty_; ++Idx )
+	{
+		while ( MapInfo_[ posx ][ posy ].Type_ != LocationType::Empty )
+		{
+			posx = rand() % Width_;
+			posy = rand() % Height_;
+		}
+		MapInfo_[ posx ][ posy ].Type_ = LocationType::Death;
+	}/**/
 }
 
 void PuzzleComponent::InputFunction( Bubblewrap::Events::Event* Event )
@@ -278,4 +340,101 @@ void PuzzleComponent::Update( float dt )
 		x = pos.X();
 	pos.SetX( x );
 	GetParentEntity()->SetLocalPosition( pos );
+}
+
+void PuzzleComponent::CreateMaze()
+{
+	struct Pos { int x; int y; };
+
+	Pos start;
+	start.x = rand() % Width_;
+	start.y = rand() % Height_;
+
+	bool visited[ MaxMapSize ][ MaxMapSize ];
+	for ( int Idx1 = 0; Idx1 < Width_; ++Idx1 )
+	{
+		for ( int Idx2 = 0; Idx2 < Width_; ++Idx2 )
+		{
+			visited[ Idx1 ][ Idx2 ] = false;
+		}
+	}
+
+	std::vector<Pos> openList;
+	openList.push_back( start );
+	visited[ start.x ][ start.y ] = true;
+
+	while ( openList.size() > 0 )
+	{
+		int r = rand() % openList.size();
+		Pos cell = openList[ r ];
+		openList.erase( openList.begin() + r);
+		visited[ cell.x ][ cell.y ] = true;
+		int count = 0;
+		if ( ( cell.x > 0 ) && ( MapInfo_[ cell.x - 1 ][ cell.y ].Type_ == LocationType::Empty ) )
+			++count;
+		if ( ( cell.x < Width_ - 1 ) && ( MapInfo_[ cell.x + 1 ][ cell.y ].Type_ == LocationType::Empty ) )
+			++count;
+		if ( ( cell.y > 0 ) && ( MapInfo_[ cell.x ][ cell.y - 1 ].Type_ == LocationType::Empty ) )
+			++count;
+		if ( ( cell.y < Height_ - 1 ) && ( MapInfo_[ cell.x ][ cell.y + 1 ].Type_ == LocationType::Empty ) )
+			++count;
+		if ( count < 2 )
+		{
+			MapInfo_[ cell.x ][ cell.y ].Type_ = LocationType::Empty;
+			printf("%d\n", 3);
+		}
+		else
+		{
+			continue;
+		}
+
+		if ( cell.x > 0 )
+		{
+			if ( !visited[ cell.x - 1 ][ cell.y ] )
+			{
+				visited[ cell.x - 1 ][ cell.y ] = true;
+				Pos n;
+				n.x = cell.x - 1;
+				n.y = cell.y;
+				openList.push_back( n );
+			}
+		}
+		if ( cell.x < Width_ - 1 )
+		{
+			if ( !visited[ cell.x + 1 ][ cell.y ] )
+			{
+				visited[ cell.x + 1 ][ cell.y ] = true;
+				Pos n;
+				n.x = cell.x + 1;
+				n.y = cell.y;
+				openList.push_back( n );
+			}
+		}
+		if ( cell.y > 0 )
+		{
+			if ( !visited[ cell.x ][ cell.y - 1 ] )
+			{
+				visited[ cell.x ][ cell.y - 1 ] = true;
+				Pos n;
+				n.x = cell.x;
+				n.y = cell.y - 1;
+				openList.push_back( n );
+			}
+		}
+		if ( cell.y < Height_ - 1 )
+		{
+			if ( !visited[ cell.x ][ cell.y + 1 ] )
+			{
+				visited[ cell.x ][ cell.y + 1 ] = true;
+				Pos n;
+				n.x = cell.x;
+				n.y = cell.y + 1;
+				openList.push_back( n );
+			}
+		}
+	}
+
+
+
+
 }

@@ -47,6 +47,11 @@
 						"name" : "Adult2"
 					}
 			]
+		},
+		{
+			"name" : "ArialFont",
+			"type" : "Font",
+			"fontFile" : "arial.ttf"
 		}
 	]
 

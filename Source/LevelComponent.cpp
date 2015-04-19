@@ -8,6 +8,7 @@ LevelComponent::LevelComponent()
 {
 	TimeToSpawn_ = 0;
 	Kills_ = 0;
+	PlayerScore_ = 0;
 }
 
 void LevelComponent::Initialise( Json::Value Params )
@@ -37,6 +38,7 @@ void LevelComponent::Copy( LevelComponent* Target, LevelComponent* Base )
 
 void LevelComponent::OnAttach()
 {
+	TextComponent_ = GetParentEntity()->GetComponentsByType<Text>( )[ 0 ];
 }
 
 void LevelComponent::Update( float dt )
@@ -59,6 +61,12 @@ void LevelComponent::Update( float dt )
 		Puzzles_.push_back( puzzle );
 		SetPuzzleCoordinates();
 	}
+	PlayerScore_ += dt * 100.0f;
+	char buffer[ 256 ];
+	memset( buffer, 0, 256 );
+	sprintf( buffer, "Score: %d", ( int ) PlayerScore_ );
+	TextComponent_->SetText( buffer );
+
 }
 
 void LevelComponent::RemovePuzzle( Base::Entity* Puzzle )
@@ -90,4 +98,9 @@ void LevelComponent::SetPuzzleCoordinates()
 		right = left - PuzzleGap_;
 	}
 
+}
+
+void LevelComponent::AddScore( float Score )
+{
+	PlayerScore_ += Score;
 }

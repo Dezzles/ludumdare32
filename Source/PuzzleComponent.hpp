@@ -80,7 +80,7 @@ private:
 	PositionInfo MapInfo_[ MaxMapSize ][ MaxMapSize ];
 	int Difficulty_;
 	PositionInfo GetPositionInfo( int X, int Y );
-	std::map<LocationType, TileData> TileData_;
+	std::map<int, TileData> TileData_;
 
 	void UpdateTexCoords();
 

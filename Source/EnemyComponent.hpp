@@ -17,6 +17,7 @@ public:
 
 	PROTECTED_FIELD( float, Speed );
 	PROTECTED_FIELD( float, GoFast );
+	PROTECTED_FIELD( float, PlayerPosition );
 	PROTECTED_FIELD( Sprite*, RenderSprite );
 	void Update( float dt );
 private:

@@ -19,14 +19,15 @@ public:
 	PROTECTED_FIELD( float, SpawnRate );
 	PROTECTED_FIELD( float, PuzzleGap );
 	PROTECTED_FIELD( float, EnemySpeed );
-
+	PROTECTED_FIELD( float, PlayerScore );
 	virtual void Update( float dt );
-
+	void AddScore( float Score );
 	void SetPuzzleCoordinates();
 	void RemovePuzzle( Base::Entity* puzzle );
 private:
 	float TimeToSpawn_;
 	std::vector< Base::Entity* > Puzzles_;
+	Text* TextComponent_;
 	int Kills_;
 };
 

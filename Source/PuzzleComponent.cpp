@@ -28,6 +28,7 @@ PuzzleComponent::PuzzleComponent()
 	TileData_[ LocationType::Safe ] =	TileData( 0.75f, 1.00f, 0.00f, 0.25f );
 	TileData_[ LocationType::Death ] =	TileData( 0.50f, 0.75f, 0.00f, 0.25f );
 	TileData_[ LocationType::Wall ] =	TileData( 0.00f, 0.25f, 0.00f, 0.25f );
+	TileData_[ LocationType::Death | LocationType::Player] = TileData( 0.50f, 0.75f, 0.25f, 0.50f );
 
 	EnemyObject_ = nullptr;
 
@@ -381,7 +382,6 @@ void PuzzleComponent::CreateMaze()
 		if ( count < 2 )
 		{
 			MapInfo_[ cell.x ][ cell.y ].Type_ = LocationType::Empty;
-			printf("%d\n", 3);
 		}
 		else
 		{

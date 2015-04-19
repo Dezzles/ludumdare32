@@ -79,11 +79,24 @@
 				{
 					"type" : "LevelComponent",
 					"name" : "LevelComponent", 
-					"spawnX" : -100,
+					"spawnX" : -200,
 					"spawnY" : 380,
-					"spawnRate" : 3,
+					"spawnRate" : 2,
 					"puzzleGap" : 10,
 					"enemySpeed" : 30
+				},
+				{
+					"type" : "Text",
+					"name" : "ScoreText",
+					"position" : "300 300",
+					"colour" : "255 255 255 255",
+					"font" : "textures:ArialFont",
+					"window" : "Main",
+					"layer" : 90,
+					"text" : "Score",
+					"characterSize" : 16,
+					"hAlign" : "left",
+					"vAlign" : "top"
 				}
 			]
 		},
@@ -100,7 +113,7 @@
 					"width" : 4,
 					"height" : 5,
 					"backgroundColour" : "0 0 0 128",
-					"movementSpeed" : 100,
+					"movementSpeed" : 150,
 					"maxMapDifficulty" : 25
 				},
 				{
@@ -144,7 +157,44 @@
 				},
 				{
 					"type" : "EnemyComponent",
-					"speed" : 70
+					"speed" : 70,
+					"playerPosition" : 700
+				}
+			]
+		},
+		{
+			"type" : "Entity",
+			"name" : "GameOverEntity",
+			"position" : "400 300 0",
+			"components" : [
+				{
+					"type" : "Text",
+					"name" : "Score",
+					"position" : "0 0",
+					"colour" : "255 255 255 255",
+					"font" : "textures:ArialFont",
+					"window" : "Main",
+					"layer" : 20,
+					"text" : "Score",
+					"characterSize" : 24,
+					"hAlign" : "centre",
+					"vAlign" : "centre"
+				},
+				{
+					"type" : "Text",
+					"name" : "Score",
+					"position" : "0 150",
+					"colour" : "255 255 255 255",
+					"font" : "textures:ArialFont",
+					"window" : "Main",
+					"layer" : 20,
+					"text" : "Press any key to continue...",
+					"characterSize" : 16,
+					"hAlign" : "centre",
+					"vAlign" : "centre"
+				},
+				{
+					"type" : "ScoreComponent"
 				}
 			]
 		}

@@ -23,9 +23,9 @@ int main()
 	settings.Registers_.push_back( Bubblewrap::Registers::SfmlRegisters::RegisterUtilities );
 	settings.Registers_.push_back( Bubblewrap::Registers::SfmlRegisters::RegisterGraphics );
 	settings.Registers_.push_back( Bubblewrap::Registers::SfmlRegisters::RegisterAudio );
-	settings.Resources_.push_back( "textures" );
-	settings.Paths_.push_back("MindLikeABot.exe");
-	///settings.Paths_.push_back("assets");
+	settings.Resources_.push_back( "textures" ); 
+	//settings.Paths_.push_back("MindLikeABot.exe");
+	settings.Paths_.push_back("assets");
 	settings.TypeRegistration_ = ( [ ]( Bubblewrap::Base::ObjectRegister* Register )
 	{
 		Register->RegisterCreator( "BackgroundComponent", BackgroundComponent::Create, BackgroundComponent::CopyDef );

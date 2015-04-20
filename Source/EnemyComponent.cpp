@@ -28,7 +28,7 @@ void EnemyComponent::Copy( EnemyComponent* Target, EnemyComponent* Base )
 
 void EnemyComponent::OnAttach()
 {
-	RenderSprite_ = GetParentEntity()->GetComponentsByType<Sprite>()[ 1 ];
+	RenderSprite_ = GetParentEntity()->GetComponentsByType<Sprite>()[ 0 ];
 }
 
 void EnemyComponent::Update( float dt )

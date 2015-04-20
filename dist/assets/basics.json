@@ -55,7 +55,7 @@
 						{
 							"type" : "BackgroundComponent",
 							"backgroundSize" : 640,
-							"speed" : 30,
+							"speed" : 400,
 							"gapShrink" : 10
 						}
 					]
@@ -83,7 +83,7 @@
 					"spawnY" : 380,
 					"spawnRate" : 2,
 					"puzzleGap" : 10,
-					"enemySpeed" : 30
+					"enemySpeed" : 60
 				},
 				{
 					"type" : "Text",
@@ -113,14 +113,15 @@
 					"width" : 4,
 					"height" : 5,
 					"backgroundColour" : "0 0 0 128",
-					"movementSpeed" : 150,
+					"movementSpeed" : 250,
 					"maxMapDifficulty" : 25
 				},
 				{
 					"type" : "Sound",
 					"resource" : "textures:DeadlySound",
 					"autoplay" : false,
-					"volume" : 0.2
+					"volume" : 1.0,
+					"positionalSound" : false
 				},
 				{
 					"name" : "BorderVertices",
@@ -163,7 +164,7 @@
 				},
 				{
 					"type" : "EnemyComponent",
-					"speed" : 70,
+					"speed" : 140,
 					"playerPosition" : 700
 				}
 			]
@@ -203,7 +204,8 @@
 					"type" : "Sound",
 					"resource" : "textures:GameOverSound",
 					"autoplay" : true,
-					"volume" : 1.0
+					"volume" : 1.0,
+					"positionalSound" : false
 				},
 				{
 					"type" : "Text",
@@ -462,7 +464,8 @@
 				{
 					"type" : "Sound",
 					"resource" : "textures:ExplosionSound",
-					"autoplay" : true
+					"autoplay" : true,
+					"positionalSound" : false
 				}
 			]
 		}

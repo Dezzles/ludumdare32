@@ -47,6 +47,9 @@ void LevelComponent::Update( float dt )
 	SetPuzzleCoordinates();
 	if ( TimeToSpawn_ < 0.0f )
 	{
+		SpawnRate_ = SpawnRate_ * 0.99f;
+		if (SpawnRate_ < 1.0f )
+			SpawnRate_ = 1.0f;
 		TimeToSpawn_ += SpawnRate_;
 		Base::Entity* enemy = dynamic_cast<Base::Entity*>( GetRegister().LoadObject( "basics:EnemyEntity", GetParentEntity() ) );
 		enemy->SetLocalPosition( Vector3f( SpawnX_, SpawnY_, 0.0f ) );

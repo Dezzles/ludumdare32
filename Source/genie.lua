@@ -94,3 +94,19 @@ project "LudumDare32"
 			"../build/lib/debug"
 		}
 
+	configuration ( "Release", "linux" )
+		defines { "NDEBUG" }
+		flags { "Optimize" }
+		links
+		{
+			"sfml-graphics",
+			"sfml-window",
+			"sfml-system",
+			"sfml-audio",
+			"physfs"
+		}
+		libdirs
+		{
+			"../build/lib/release"
+		}
+

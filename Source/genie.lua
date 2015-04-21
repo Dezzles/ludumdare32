@@ -46,7 +46,7 @@ project "LudumDare32"
 		}
 
 
-	configuration "Debug"
+	configuration "Debug and windows"
 		defines { "DEBUG" }
 		flags { "Symbols" }
 		links
@@ -77,3 +77,20 @@ project "LudumDare32"
 		{
 			"../build/lib/release"
 		}
+
+	configuration ( "Debug", "linux" )
+		defines { "DEBUG" }
+		flags { "Symbols" }
+		links
+		{
+			"sfml-graphics",
+			"sfml-window",
+			"sfml-system",
+			"sfml-audio",
+			"physfs"
+		}
+		libdirs
+		{
+			"../build/lib/debug"
+		}
+

@@ -9,6 +9,7 @@
 #include "Bubblewrap/Registers/SfmlRegisters.hpp"
 #include "Bubblewrap/Math/Matrix3.hpp"
 #include "BackgroundComponent.hpp"
+
 int main()
 {
 	Bubblewrap::Game::GameSettings settings;

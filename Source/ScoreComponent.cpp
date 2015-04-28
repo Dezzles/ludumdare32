@@ -1,5 +1,8 @@
 #include "ScoreComponent.hpp"
 #include "Bubblewrap/Events.hpp"
+
+#include <cstring>
+
 using namespace Math;
 
 ScoreComponent::ScoreComponent()

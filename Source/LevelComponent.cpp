@@ -2,6 +2,9 @@
 #include "PuzzleComponent.hpp"
 #include "EnemyComponent.hpp"
 #include "Bubblewrap/Events.hpp"
+
+#include <cstring>
+
 using namespace Math;
 
 LevelComponent::LevelComponent()

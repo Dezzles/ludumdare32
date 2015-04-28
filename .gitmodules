@@ -4,3 +4,6 @@
 [submodule "bubblewrap_sfml"]
 	path = bubblewrap_sfml
 	url = https://github.com/bubblewrap-engine/bubblewrap_sfml.git
+[submodule "bubblewrap_bgfx"]
+	path = bubblewrap_bgfx
+	url = https://github.com/bubblewrap-engine/bubblewrap_bgfx

@@ -6,7 +6,7 @@
 #include "MainMenuComponent.hpp"
 #include "AnimatedComponent.hpp"
 #include "Bubblewrap/Registers/BubblewrapRegister.hpp"
-#include "Bubblewrap/Registers/SfmlRegisters.hpp"
+#include "Bubblewrap/Registers/BgfxRegisters.hpp"
 #include "Bubblewrap/Math/Matrix3.hpp"
 #include "BackgroundComponent.hpp"
 
@@ -21,9 +21,7 @@ int main()
 	settings.WindowSettings_[ 0 ].Name_ = "Main";
 	settings.WindowSettings_[ 0 ].Colour_ = Bubblewrap::Render::Colour( 0.8f, 0.8f, 0.8f );
 	Bubblewrap::Logs::StaticLog::Instance()->SetLogLevel( Bubblewrap::Logs::StaticLog::WARNING );
-	settings.Registers_.push_back( Bubblewrap::Registers::SfmlRegisters::RegisterUtilities );
-	settings.Registers_.push_back( Bubblewrap::Registers::SfmlRegisters::RegisterGraphics );
-	settings.Registers_.push_back( Bubblewrap::Registers::SfmlRegisters::RegisterAudio );
+	settings.Registers_.push_back( Bubblewrap::Registers::BgfxRegisters::RegisterGraphics );
 	settings.Resources_.push_back( "textures" ); 
 	//settings.Paths_.push_back("MindLikeABot.exe");
 	settings.Paths_.push_back("assets");

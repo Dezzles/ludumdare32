@@ -1,18 +1,14 @@
-dofile( "params-" .. _ACTION .. ".lua" )
-additionalIncludes = {}
-additionalLibraries = {}
-
+dofile( "bubblewrap/Scripts/Bubblewrap.lua" )
 dofile ( "bubblewrap/Scripts/Bubblewrap_Scripts.lua" )
 
-solution "LudumDare32"
-	configurations { "Debug", "Release", "CrashNBurn" }
-	location "build"
+-- Solution.
+PsySolutionGame( "LudumDare32" )
 
 
 -- Build externals.
 dofile ("bubblewrap/External/genie.lua")
 
-loadLibrary( "bubblewrap_sfml" )
+loadLibrary( "bubblewrap_bgfx" )
 
 -- Build engine.
 dofile ("bubblewrap/bubblewrap_genie.lua")

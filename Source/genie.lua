@@ -1,15 +1,11 @@
-project "LudumDare32"
-	kind "ConsoleApp"
-	language "C++"
-	files { "**.h", "**.hpp", "**.cpp" }
-	location ( "../build" )
-	targetdir ( "../build/out/" )
-	objdir ( "../build/obj" )
+
+PsyProjectGameExe( solution().name )
+	files { "./**.h", "./**.hpp", "./**.cpp", "./**.h" }
+	debugdir "../Dist"
 	local allIncludes = 
 	{
 		"../bubblewrap/include",
 		"../bubblewrap/External",
-		SFML2DIR .. "/include/"	
 	}
 	for k, v in pairs( additionalIncludes ) do
 		table.insert(allIncludes, v)
@@ -18,95 +14,17 @@ project "LudumDare32"
 	{
 		allIncludes
 	}
-	links
-	{
-		"Bubblewrap", 
-		"External_Json",
-		additionalLibraries
+	-- External includes.
+	includedirs { 
+      "../Psybrus/External/jsoncpp/include", 
+   }
 
-	}
+   PsyAddEngineLinks {
+      "base",
+   }
+   
+   PsyAddExternalLinks {
+      "physfs",
+      "json",
+   }
 	
-	buildoptions "-std=c++11"
-	configuration "CrashNBurn"
-		targetdir ( "../build/lib/crashnburn" )
-		defines { "DEBUG", "CRASHNBURN" }
-		flags { "Symbols" }
-		links
-		{
-			SFML2DIR .. "/lib/sfml-graphics-d",
-			SFML2DIR .. "/lib/sfml-window-d",
-			SFML2DIR .. "/lib/sfml-system-d",
-			SFML2DIR .. "/lib/sfml-audio-d",
-			PHYSFSBUILDDIR .. "/Debug/physfs"
-		
-		}
-		libdirs
-		{
-			"../build/lib/debug"
-		}
-
-
-	configuration "Debug and windows"
-		defines { "DEBUG" }
-		flags { "Symbols" }
-		links
-		{
-			SFML2DIR .. "/lib/sfml-graphics-d",
-			SFML2DIR .. "/lib/sfml-window-d",
-			SFML2DIR .. "/lib/sfml-system-d",
-			SFML2DIR .. "/lib/sfml-audio-d",
-			PHYSFSBUILDDIR .. "/Release/physfs"
-		}
-		libdirs
-		{
-			"../build/lib/debug"
-		}
-
-	configuration "Release"
-		defines { "NDEBUG" }
-		flags { "Optimize" }
-		links
-		{
-			SFML2DIR .. "/lib/sfml-graphics",
-			SFML2DIR .. "/lib/sfml-window",
-			SFML2DIR .. "/lib/sfml-system",
-			SFML2DIR .. "/lib/sfml-audio"
-		
-		}
-		libdirs
-		{
-			"../build/lib/release"
-		}
-
-	configuration ( "Debug", "linux" )
-		defines { "DEBUG" }
-		flags { "Symbols" }
-		links
-		{
-			"sfml-graphics",
-			"sfml-window",
-			"sfml-system",
-			"sfml-audio",
-			"physfs"
-		}
-		libdirs
-		{
-			"../build/lib/debug"
-		}
-
-	configuration ( "Release", "linux" )
-		defines { "NDEBUG" }
-		flags { "Optimize" }
-		links
-		{
-			"sfml-graphics",
-			"sfml-window",
-			"sfml-system",
-			"sfml-audio",
-			"physfs"
-		}
-		libdirs
-		{
-			"../build/lib/release"
-		}
-

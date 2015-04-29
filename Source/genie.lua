@@ -27,4 +27,6 @@ PsyProjectGameExe( solution().name )
       "physfs",
       "json",
    }
+
+	PsyAddEngineLinks ( additionalLibraries ) 
 	

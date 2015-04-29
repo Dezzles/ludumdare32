@@ -8,7 +8,7 @@ PsySolutionGame( "LudumDare32" )
 -- Build externals.
 dofile ("bubblewrap/External/genie.lua")
 
-loadLibrary( "bubblewrap_bgfx" )
+loadLibrary( "bgfx" )
 
 -- Build engine.
 dofile ("bubblewrap/bubblewrap_genie.lua")

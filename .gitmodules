@@ -7,3 +7,6 @@
 [submodule "bubblewrap_bgfx"]
 	path = bubblewrap_bgfx
 	url = https://github.com/bubblewrap-engine/bubblewrap_bgfx
+[submodule "bubblewrap_sdl"]
+	path = bubblewrap_sdl
+	url = https://github.com/bubblewrap-engine/bubblewrap_sdl.git

@@ -27,6 +27,9 @@ PsyProjectGameExe( solution().name )
       "physfs",
       "json",
    }
+	for k, v in pairs( additionalExternalLibraries ) do
+		PsyAddExternalLinks { v }
+	end 
 
 	PsyAddEngineLinks ( additionalLibraries ) 
 	

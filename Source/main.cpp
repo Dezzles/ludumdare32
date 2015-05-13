@@ -6,6 +6,7 @@
 #include "MainMenuComponent.hpp"
 #include "AnimatedComponent.hpp"
 #include "Bubblewrap/Registers/BubblewrapRegister.hpp"
+#include "Bubblewrap/Registers/SdlRegisters.hpp"
 #include "Bubblewrap/Registers/BgfxRegisters.hpp"
 #include "Bubblewrap/Math/Matrix3.hpp"
 #include "BackgroundComponent.hpp"
@@ -20,9 +21,13 @@ int main()
 	settings.WindowSettings_[ 0 ].Title_ = "Ludum Dare #32 - Mind Like A Bot";
 	settings.WindowSettings_[ 0 ].Name_ = "Main";
 	settings.WindowSettings_[ 0 ].Colour_ = Bubblewrap::Render::Colour( 0.8f, 0.8f, 0.8f );
+	settings.WindowSettings_[ 0 ].Colour_ = Bubblewrap::Render::Colour( 1.0f, 0.0f, 0.0f );
 	Bubblewrap::Logs::StaticLog::Instance()->SetLogLevel( Bubblewrap::Logs::StaticLog::WARNING );
+	settings.Registers_.push_back( Bubblewrap::Registers::SdlRegisters::RegisterUtilities );
+	settings.Registers_.push_back( Bubblewrap::Registers::SdlRegisters::RegisterGraphics );
 	settings.Registers_.push_back( Bubblewrap::Registers::BgfxRegisters::RegisterGraphics );
-	settings.Resources_.push_back( "textures" ); 
+	settings.Resources_.push_back( "textures" );
+	settings.Resources_.push_back( "shaders" );
 	//settings.Paths_.push_back("MindLikeABot.exe");
 	settings.Paths_.push_back("assets");
 	settings.TypeRegistration_ = ( [ ]( Bubblewrap::Base::ObjectRegister* Register )

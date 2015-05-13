@@ -31,5 +31,9 @@ PsyProjectGameExe( solution().name )
 		PsyAddExternalLinks { v }
 	end 
 
+	for k, v in pairs( additionalOtherLibraries ) do
+		PsyAddOtherLinks { v }
+	end 
+
 	PsyAddEngineLinks ( additionalLibraries ) 
 	

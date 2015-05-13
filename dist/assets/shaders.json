@@ -1,0 +1,11 @@
+{
+	"name" : "shaders",
+	"resources" : [
+		{
+			"type" : "Shader",
+			"name" : "default",
+			"fragmentShader" : "shaders/default.fs",
+			"vertexShader" : "shaders/default.vs"
+		}
+	]
+}
